@@ -2,13 +2,15 @@ let mediaRecorder: MediaRecorder | null = null;
 let isRecording = false;
 let socket: WebSocket | null = null;
 
+console.log("Meeting Buddy content script loaded");
+
 chrome.runtime.onMessage.addListener(async (msg) => {
   if (msg.action === "START_RECORDING" && !isRecording) {
     try {
       isRecording = true;
 
       // 1️⃣ Open WebSocket connection to backend
-      socket = new WebSocket("ws://localhost:4000");
+      socket = new WebSocket("ws://localhost:8080");
 
       socket.onopen = async () => {
         console.log("Meeting Buddy: WebSocket connected");
